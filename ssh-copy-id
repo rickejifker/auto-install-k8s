@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# 要添加的公钥文件路径
+pub_key_file="$HOME/.ssh/id_rsa.pub"
+
+# 服务器IP地址列表
+servers=(
+    "server1_ip"
+    "server2_ip"
+    "server3_ip"
+)
+
+# 添加公钥到每个服务器
+for server in "${servers[@]}"; do
+    echo "正在向 $server 添加公钥..."
+    ssh-copy-id -i "$pub_key_file" "$server"
+    if [[ $? -eq 0 ]]; then
+        echo "已成功将公钥添加到 $server"
+    else
+        echo "向 $server 添加公钥失败"
+    fi
+done
